@@ -1,0 +1,21 @@
+diff -up st/x.c st/x.c
+--- st/x.c	2021-01-29 10:17:12.346433874 +0000
++++ st/x.c	2021-01-29 10:17:22.218332547 +0000
+@@ -1426,9 +1426,14 @@ xdrawglyphfontspecs(const XftGlyphFontSp
+ 	}
+ 
+ 	if (base.mode & ATTR_REVERSE) {
+-		temp = fg;
+-		fg = bg;
+-		bg = temp;
++		if (bg == fg) {
++			bg = &dc.col[defaultfg];
++			fg = &dc.col[defaultbg];
++		} else {
++			temp = fg;
++			fg = bg;
++			bg = temp;
++		}
+ 	}
+ 
+ 	if (base.mode & ATTR_BLINK && win.mode & MODE_BLINK)

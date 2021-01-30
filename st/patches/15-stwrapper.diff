@@ -1,0 +1,11 @@
+
+--- st/Makefile	2021-01-29 10:50:09.883961581 +0000
++++ st/Makefile	2021-01-29 10:50:31.268081746 +0000
+@@ -54,6 +54,7 @@ install: st
+ 	mkdir -p $(DESTDIR)$(PREFIX)/share/applications
+ 	install -D -m 0755 ../res/st.desktop $(DESTDIR)$(PREFIX)/share/applications/st.desktop
+ 	install -D -m 0644 ../res/st.png $(DESTDIR)$(PREFIX)/share/icons/st.png
++	install -D -m 0755 ../res/stwrapper $(DESTDIR)$(PREFIX)/bin/stwrapper
+ 
+ uninstall:
+ 	rm -f $(DESTDIR)$(PREFIX)/bin/st

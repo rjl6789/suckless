@@ -1,0 +1,14 @@
+
+--- st/Makefile	2021-01-29 10:48:24.579313852 +0000
++++ st/Makefile	2021-01-29 10:48:46.183454874 +0000
+@@ -50,6 +50,10 @@ install: st
+ 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
+ 	tic -sx st.info
+ 	@echo Please see the README file regarding the terminfo entry of st.
++	mkdir -p $(DESTDIR)$(PREFIX)/share/icons
++	mkdir -p $(DESTDIR)$(PREFIX)/share/applications
++	install -D -m 0755 ../res/st.desktop $(DESTDIR)$(PREFIX)/share/applications/st.desktop
++	install -D -m 0644 ../res/st.png $(DESTDIR)$(PREFIX)/share/icons/st.png
+ 
+ uninstall:
+ 	rm -f $(DESTDIR)$(PREFIX)/bin/st

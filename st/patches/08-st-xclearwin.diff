@@ -1,0 +1,40 @@
+diff -up st/st.c st/st.c
+--- st/st.c	2021-01-29 10:14:22.756545992 +0000
++++ st/st.c	2021-01-29 10:18:19.529784459 +0000
+@@ -1959,10 +1959,8 @@ strhandle(void)
+ 				fprintf(stderr, "erresc: invalid color j=%d, p=%s\n",
+ 				        j, p ? p : "(null)");
+ 			} else {
+-				/*
+-				 * TODO if defaultbg color is changed, borders
+-				 * are dirty
+-				 */
++				if (j == defaultbg)
++					xclearwin();
+ 				redraw();
+ 			}
+ 			return;
+diff -up st/win.h st/win.h
+--- st/win.h	2021-01-29 09:56:23.841798389 +0000
++++ st/win.h	2021-01-29 10:18:19.529784459 +0000
+@@ -38,3 +38,4 @@ void xsetpointermotion(int);
+ void xsetsel(char *);
+ int xstartdraw(void);
+ void xximspot(int, int);
++void xclearwin(void);
+diff -up st/x.c st/x.c
+--- st/x.c	2021-01-29 10:18:10.709864516 +0000
++++ st/x.c	2021-01-29 10:18:19.529784459 +0000
+@@ -834,6 +834,12 @@ xclear(int x1, int y1, int x2, int y2)
+ }
+ 
+ void
++xclearwin(void)
++{
++	xclear(0, 0, win.w, win.h);
++}
++
++void
+ xhints(void)
+ {
+ 	XClassHint class = {opt_name ? opt_name : termname,

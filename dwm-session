@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# dwm-session
+# use this as the exec from /usr/share/xsessions/dwm.desktop or ...
+# add `export STARTUP=dwm-session` to .xsession and use startx
+#
+export DISPLAY=${DISPLAY:-:0}
+
+command -v dimensions >/dev/null &&
+export DIMENSIONS="$(dimensions)"
+
+xhost +local: >/dev/null &
+
+# some x options
+xset b off &
+xset +fp ~/.fonts &
+xset +fp ~/.local/share/fonts &
+
+run() {
+    cmd=$1
+    shift
+    if ! pgrep $cmd >/dev/null ; then
+        $cmd "$@" &
+    fi
+}
+
+# gnome keyring
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
+# autostart programs
+if command -v dex &> /dev/null; then
+    dex /etc/xdg/autostart/at-spi-dbus-bus.desktop
+    dex /etc/xdg/autostart/pop-flatpak-repos.desktop
+    dex /etc/xdg/autostart/nm-applet.desktop
+    dex /etc/xdg/autostart/pulseaudio.desktop
+    dex /etc/xdg/autostart/user-dirs-update-gtk.desktop
+    dex /etc/xdg/autostart/xdg-user-dirs.desktop
+    dex /etc/xdg/autostart/polkit-mate-authentication-agent-1.desktop
+    dex /etc/xdg/autostart/print-applet.desktop
+    dex /etc/xdg/autostart/spice-vdagent.desktop
+    dex -a -s "$HOME/.config/autostart"
+fi
+
+run sxhkd
+run dunst
+run bar -d
+run background
+run pavolume --set 50
+run brightnessControl --set 50
+
+#locker
+run xss-lock -l -- transfer-sleep-lock-generic-delay
+
+#compositor
+picom --experimental-backends -b
+
+# remove run function
+unset -f run
+
+# go go go!
+eval exec $HOME/.local/bin/dwm
