@@ -2,7 +2,7 @@
 
 based on the fantastic repos from @mitchweaver
 
-## Dependancies
+## Dependancies (todo)
 
 `./dependancies.sh`
 
