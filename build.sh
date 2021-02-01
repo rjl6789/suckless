@@ -8,6 +8,7 @@ TABBED_VERSION=dabf6a25ab01107fc1e0464ee6a3e369d1626f97   # 12 May 2020
 SURF_VERSION=d068a3878b6b9f2841a49cd7948cdf9d62b55585     # 08 Feb 2019
 SENT_VERSION=2649e8d5334f7e37a1710c60fb740ecfe91b9f9e     # 13 May 2020
 SLOCK_VERSION=35633d45672d14bd798c478c45d1a17064701aa9    # Sat Mar 25 21:16:01 2017
+ASLSTATUS_VERSION=70cefa5fa93abfe3c6727040a25516e66c1c08df
 
 export PREFIX="${HOME}"/.local
 export THEMELOC="${HOME}"/src/suckless/themes
@@ -27,7 +28,11 @@ die() {
 clone() {
     mkdir -p "$1"
     cd "$1"
-    [ -d "$1" ] || git clone "$2/$1"
+    [ -d "$1" ] || case $1 in
+        aslstatus) git clone "$2" ;;
+        *) git clone "$2/$1"
+    esac
+
     cd "$1"
     git clean -df
     git fetch --all
@@ -44,6 +49,7 @@ build() {
         cd "$START_PWD"
 
         sl=git://git.suckless.org
+	aslstat=https://notabug.org/dm9pZCAq/aslstatus.git
         case $name in
             st) clone "$name" $sl $ST_VERSION ;;
             dwm) clone "$name" $sl $DWM_VERSION ;;
@@ -52,6 +58,7 @@ build() {
             tabbed) clone "$name" $sl $TABBED_VERSION ;;
             sent) clone "$name" $sl $SENT_VERSION ;;
             slock) clone "$name" $sl $SLOCK_VERSION ;;
+	    aslstatus) clone "$name" $aslstat $ASLSTATUS_VERSION ;;
             *) usage
         esac
 
@@ -68,9 +75,13 @@ build() {
 
         cd "$name"
         make -s clean
-        make -s -j"${NPROC:-1}" CC="${CC:-gcc}" THEMELOC="${THEMELOC}"
+	case $name in
+		aslstatus) make -s PREFIX="$PREFIX" AUDIO="ALSA" ;;
+		*) make -s -j"${NPROC:-1}" CC="${CC:-gcc}" THEMELOC="${THEMELOC}"
+	esac
 	case $name in
 		slock) sudo make -s PREFIX="$PREFIX" install ;;
+		aslstatus) make -s PREFIX="$PREFIX" AUDIO="ALSA" install ;;
 		*) make -s PREFIX="$PREFIX" install
 	esac
     done
