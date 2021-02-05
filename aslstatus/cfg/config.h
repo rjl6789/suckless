@@ -89,23 +89,26 @@ static const char pavolume[] = "pavolume";
 static struct arg_t args[] = {
 
 /* function		format		argument	interval (in ms) */
-{ disk_perc,		" [# %s%%",	"/",		60 SEC,	END },
+{ disk_perc,		" [ %s%%",	"/",		60 SEC,	END },
 { disk_free,		" %s]",		"/",		60 SEC,	END },
 { cpu_perc,		"-[ %s%%]",	NULL,		 1 SEC,	END },
-/*{ load_avg,		"-[%s]",	NULL,		 3 SEC,	END }, */
-{ ram_used,		"-[﬙ %s]", 	NULL,		 3 SEC,	END },
+{ load_avg,		"-[%s]",	NULL,		 3 SEC,	END }, 
+//{ temp,			"-[ %s]",	NULL,		10 SEC,END },
+{ temp,			"-[%s]",	NULL,		10 SEC,END },
+{ ram_used,		"-[ %s]", 	NULL,		 3 SEC,	END },
 
-{ vol_perc,		"-[墳 %s]",	NULL,		 0,	END }, 
+/*{ vol_perc,		"-[墳%s]",	NULL,		 0,	END }, */
 /*{ run_command,		"-[墳 %s]",	pulse_volume,	 1,	END }, */
 
-{ wifi_essid,		"-[直 \"%s\"",	"wlp58s0",		 2 SEC,	END },
-{ wifi_perc,		" %s%%]",	"wlp58s0",		 2 SEC,	END },
+
+{ wifi_essid,		"-[直 \"%s\"",	"wlp58s0",	 2 SEC,	END },
+{ wifi_perc,		" %s%%]",	"wlp58s0",	 2 SEC,	END },
 { battery_state,	"-[%s",		"BAT0",		 2 SEC,	END },
-{ battery_perc,		" %s%%]",	"BAT0",		 1 MIN,	END },
+{ battery_perc,		"%s%%]",	"BAT0",		 1 MIN,	END },
 { battery_state,	"-[%s",		"BAT1",		 2 SEC,	END },
-{ battery_perc,		" %s%%]",	"BAT1",		 1 MIN,	END },
+{ battery_perc,		"%s%%]",	"BAT1",		 1 MIN,	END },
 { datetime,		"-[ %s]",	"%a %d %b %H:%M",	 30 SEC,	END },
 { keymap,		"-[ %s^",	NULL,		 0,	END },
-{ keyboard_indicators,	"%s] ",		"c",		 0,	END },
+{ keyboard_indicators,	"%s]",		"c",		 0,	END },
 
 };

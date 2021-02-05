@@ -1,0 +1,42 @@
+--- aslstatus/components/battery.c	2021-02-01 20:39:17.318001100 +0000
++++ aslstatus/components/battery.c	2021-02-01 20:39:09.109740275 +0000
+@@ -5,9 +5,9 @@
+ #include "../util.h"
+ 
+ static const char FULL[] =        "";  /* "f" */
+-static const char UNCNOWN[] =     "";  /* "?" */
+-static const char CHARGING[] =    "+"; /* "+" */
+-static const char DISCHARGING[] = "-"; /* "-" */
++static const char UNKNOWN[] =     "";  /* "?" */
++static const char CHARGING[] =    "ﮣ";  /* "+" "+" */
++static const char DISCHARGING[] = "";  /* "-" "-" */
+ 
+ #if defined(__linux__)
+ 	#include <limits.h>
+@@ -80,7 +80,7 @@ static const char DISCHARGING[] = "-"
+ 		for (i = 0; i < LEN(map); i++)
+ 			if (!strcmp(map[i].state, state))
+ 				break;
+-		bprintf(out, "%s", (i == LEN(map)) ? UNCNOWN : map[i].symbol);
++		bprintf(out, "%s", (i == LEN(map)) ? UNKNOWN : map[i].symbol);
+ 	}
+ 
+ 	void
+@@ -191,7 +191,7 @@ static const char DISCHARGING[] = "-"
+ 				break;
+ 			}
+ 		}
+-		strncpy(out, (i == LEN(map)) ? UNCNOWN : map[i].symbol, BUFF_SZ);
++		strncpy(out, (i == LEN(map)) ? UNKNOWN : map[i].symbol, BUFF_SZ);
+ 	}
+ 
+ 	void
+@@ -243,7 +243,7 @@ static const char DISCHARGING[] = "-"
+ 			case 1:
+ 				strncpy(out, DISCHARGING, BUFF_SZ);
+ 			default:
+-				strncpy(out, UNCNOWN, BUFF_SZ);
++				strncpy(out, UNKNOWN, BUFF_SZ);
+ 		}
+ 	}
+ 

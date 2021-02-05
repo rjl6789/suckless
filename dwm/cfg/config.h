@@ -11,8 +11,10 @@
 static const int topbar  = 1;
 
 /* -*-*-*-*-*-*-*-*- FLOATING BAR -*-*-*-*-*-*-*-*-*-*-*-*-*-* */
- static const int vertpad     = GAPS_START - GAPS_START / 2; // vertical padding of bar */
- static const int sidepad     = GAPS_START - GAPS_START / 2; // horizontal padding of bar */
+ //static const int vertpad     = GAPS_START - GAPS_START / 2; // vertical padding of bar */
+ //static const int sidepad     = GAPS_START - GAPS_START / 2; // horizontal padding of bar */
+ static const int vertpad     = 6; // vertical padding of bar */
+ static const int sidepad     = 8; // horizontal padding of bar */
  static const int horizpadbar = 2;   // horizontal padding for statusbar */
  static const int vertpadbar  = 2;  // vertical padding for statusbar */
  /* -*-*-*-*-*-*-*-* NON-FLOATING BAR -*-*-*-*-*-*-*-*-*-*-*-*- */
@@ -25,13 +27,18 @@ static const int topbar  = 1;
 // for use with the rounded corners patch (0 disables)
 static const int CORNER_RADIUS = 0;
 
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayspacing = 4;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;     /* 0 means no systray */
 // theme, included from ${HOME}/src/suckless/themes in config.mk
 #include <dwm-theme.h>
 
 static const char*fonts[] = {
-    //"Terminus:pixelsize=11",
+    /*"Terminus:pixelsize=20", */
     /* "cozette:size=10", */
-    "SauceCodePro Nerd Font Mono:pixelsize=14",
+    //"Fira mono:pixelsize=17", 
+    "SauceCodePro Nerd Font Mono:pixelsize=17",
 };
 
 static const Rule rules[] = {
@@ -147,3 +154,12 @@ static const int resizehints  = 1;
 static const int focusonwheel = 1;
 static const char scratchpadname[] = "scratchpad";
 static const int nmaster      = 1;
+
+
+/* -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
+static const char *const autostart[] = {
+	"stwrapper", NULL,
+	"sh", "-c", "sleep 8 && aslstatus", NULL,
+	NULL /* terminate */
+};
+

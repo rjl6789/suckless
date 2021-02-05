@@ -44,7 +44,6 @@ fi
 
 run sxhkd
 run dunst
-run aslstatus
 run background
 run pavolume --set 50
 run brightnessControl --set 50
