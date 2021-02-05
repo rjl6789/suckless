@@ -1,5 +1,5 @@
---- dwm/dwm.c	2021-02-05 09:42:24.526226007 +0000
-+++ dwm/dwm.c	2021-02-05 09:48:28.275773604 +0000
+--- dwm/dwm.c	2021-02-05 12:37:51.264742488 +0000
++++ dwm/dwm.c	2021-02-05 12:33:27.451509859 +0000
 @@ -66,12 +66,32 @@
  #define MWM_DECOR_BORDER            (1 << 1)
  #define MWM_DECOR_TITLE             (1 << 3)
@@ -365,10 +365,10 @@
  
  void
 +resizebarwin(Monitor *m) {
-+	unsigned int w = m->ww;
++	unsigned int w = m->ww - 2 * sp;
 +	if (showsystray && m == systraytomon(m))
 +		w -= getsystraywidth();
-+	XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, w - 1 * sp - 2, bh);
++	XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, w, bh);
 +}
 +
 +void
@@ -487,18 +487,18 @@
  	selmon->showbar = selmon->pertag->showbars[selmon->pertag->curtag] = !selmon->showbar;
  	updatebarpos(selmon);
 -	XMoveResizeWindow(dpy, selmon->barwin, selmon->wx + sp, selmon->by + vp, selmon->ww - 2 * sp, bh);
-+	resizebarwin(selmon);
 +	if (showsystray) {
 +		XWindowChanges wc;
 +		if (!selmon->showbar)
-+			wc.y = -bh;
++			wc.y = -bh - vp;
 +		else if (selmon->showbar) {
-+			wc.y = 0;
++			wc.y = vertpad;
 +			if (!selmon->topbar)
-+				wc.y = selmon->mh - bh;
++				wc.y = selmon->mh - bh - vertpad;
 +		}
 +		XConfigureWindow(dpy, systray->win, CWY, &wc);
 +	}
++	resizebarwin(selmon);
  	arrange(selmon);
  }
  
@@ -521,16 +521,15 @@
  	Monitor *m;
  	XSetWindowAttributes wa = {
  		.override_redirect = True,
-@@ -2175,10 +2382,16 @@ updatebars(void)
+@@ -2175,10 +2382,15 @@ updatebars(void)
  	for (m = mons; m; m = m->next) {
  		if (m->barwin)
  			continue;
 -		m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh, 0, DefaultDepth(dpy, screen),
-+		//m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh, 0, DefaultDepth(dpy, screen),
-+		w = m->ww;
++		w = m->ww - 2 * sp;
 +		if (showsystray && m == systraytomon(m))
 +			w -= getsystraywidth();
-+		m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, w - 2 * sp, bh, 0, DefaultDepth(dpy, screen),
++		m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, w, bh, 0, DefaultDepth(dpy, screen),
  				CopyFromParent, DefaultVisual(dpy, screen),
  				CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
  		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
@@ -539,7 +538,7 @@
  		XMapRaised(dpy, m->barwin);
  		XSetClassHint(dpy, m->barwin, &ch);
  	}
-@@ -2398,6 +2611,121 @@ updatestatus(void)
+@@ -2398,6 +2610,121 @@ updatestatus(void)
  		strcpy(stext, "dwm-"VERSION);
  	for(m = mons; m; m = m->next)
  		drawbar(m);
@@ -661,7 +660,7 @@
  }
  
  void
-@@ -2495,6 +2823,16 @@ wintoclient(Window w)
+@@ -2495,6 +2822,16 @@ wintoclient(Window w)
  	return NULL;
  }
  
@@ -678,7 +677,7 @@
  Monitor *
  wintomon(Window w)
  {
-@@ -2548,6 +2886,22 @@ xerrorstart(Display *dpy, XErrorEvent *e
+@@ -2548,6 +2885,22 @@ xerrorstart(Display *dpy, XErrorEvent *e
  	return -1;
  }
  
