@@ -104,7 +104,7 @@ static Key keys[] = {
 
     /* modifier            key        function       argument */
     /* -*-*-*-*-*-*-*- dwm commands -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
-    { MODKEY,            XK_space,  togglescratch, SH("st -A 1 -t scratchpad -g 68x18") },
+    { MODKEY,            XK_space,  togglescratch, SH("st -A 1 -t scratchpad -g 75x18") },
     { MODKEY,            XK_q,      killclient,    {0} },
     { MODKEY,            XK_j,      focusstack,    {.i = +1 } },
     { MODKEY,            XK_k,      focusstack,    {.i = -1 } },
@@ -158,8 +158,26 @@ static const int nmaster      = 1;
 
 /* -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
 static const char *const autostart[] = {
+        "dex", "/etc/xdg/autostart/at-spi-dbus-bus.desktop", NULL,
+        "dex", "/etc/xdg/autostart/pop-flatpak-repos.desktop", NULL,
+        "dex", "/etc/xdg/autostart/nm-applet.desktop", NULL,
+        "dex", "/etc/xdg/autostart/pulseaudio.desktop", NULL,
+        "dex", "/etc/xdg/autostart/user-dirs-update-gtk.desktop", NULL,
+        "dex", "/etc/xdg/autostart/xdg-user-dirs.desktop", NULL,
+        "dex", "/etc/xdg/autostart/polkit-mate-authentication-agent-1.desktop", NULL,
+        "dex", "/etc/xdg/autostart/print-applet.desktop", NULL,
+        "dex", "/etc/xdg/autostart/spice-vdagent.desktop", NULL,
+        "dex", "/etc/xdg/autostart/blueman.desktop", NULL,
+        "dex", "-a", "-s", "$HOME/.config/autostart", NULL,
+	"sxhkd", NULL,
+	"dunst", NULL,
+	"background", NULL,
+	"pavolume", "--set", "50", NULL,
+	"brightnessControl", "--set", "50", NULL,
+        "xss-lock", "-l", "--", "transfer-sleep-lock-generic-delay", NULL,
+        "picom", "--experimental-backends", "-b", NULL,
+	"aslstatus", NULL,
 	"stwrapper", NULL,
-	"sh", "-c", "sleep 8 && aslstatus", NULL,
 	NULL /* terminate */
 };
 
