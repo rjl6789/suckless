@@ -57,8 +57,8 @@ cat > "${THEMELOC}"/slock-theme.h << EOF
 static const char *colorname[NUMCOLS] = {
 	[INIT] =   "$color6",     /* after initialization */
 	[INPUT] =  "$color4",   /* during input */
-	[FAILED] = "$color14",   /* wrong password */
-	[CAPS] = "$color1",         /* CapsLock on */
+	[FAILED] = "$color1",   /* wrong password */
+	[CAPS] = "$color3",         /* CapsLock on */
 };
 EOF
 }
