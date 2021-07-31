@@ -56,6 +56,7 @@ static const Rule rules[] = {
     { "ranger",      NULL,     NULL,       0,         1,           1,          -1 },
     /* -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- */
     { "feh",         NULL,     NULL,       0,         1,           1,          -1 },
+    { "Blueman-manager",         NULL,     NULL,       0,         1,           1,          -1 },
     { "mailspring",  NULL,     NULL,       0,         1,           1,          -1 },
     { "Mailspring",  NULL,     NULL,       0,         1,           1,          -1 },
     { "mpv",         NULL,     NULL,       0,         1,           1,          -1 },
@@ -104,7 +105,7 @@ static Key keys[] = {
 
     /* modifier            key        function       argument */
     /* -*-*-*-*-*-*-*- dwm commands -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
-    { MODKEY,            XK_space,  togglescratch, SH("st -A 1 -t scratchpad -g 75x18") },
+    { MODKEY,            XK_space,  togglescratch, SH("st -A 0.85 -t scratchpad -g 120x18") },
     { MODKEY,            XK_q,      killclient,    {0} },
     { MODKEY,            XK_j,      focusstack,    {.i = +1 } },
     { MODKEY,            XK_k,      focusstack,    {.i = -1 } },

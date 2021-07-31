@@ -108,7 +108,7 @@ static struct arg_t args[] = {
 { battery_state,	"-[%s",		"BAT1",		 2 SEC,	END },
 { battery_perc,		"%s%%]",	"BAT1",		 1 MIN,	END },
 { datetime,		"-[ %s]",	"%a %d %b %H:%M",	 30 SEC,	END },
-{ keymap,		"-[ %s^",	NULL,		 0,	END },
-{ keyboard_indicators,	"%s]",		"c",		 0,	END },
+//{ keymap,		"-[ %s^",	NULL,		 0,	END },
+//{ keyboard_indicators,	"%s]",		"c",		 0,	END },
 
 };

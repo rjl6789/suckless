@@ -10,7 +10,7 @@ SENT_VERSION=2649e8d5334f7e37a1710c60fb740ecfe91b9f9e      # 13 May 2020
 SLOCK_VERSION=35633d45672d14bd798c478c45d1a17064701aa9     # Sat Mar 25 21:16:01 2017
 ASLSTATUS_VERSION=d3bd38cd213015cb19c668506d74eae1aca66e58 # Thu Feb 4 23:16:28 2021 +0200
 
-export PREFIX="${HOME}"/.local
+export PREFIX="${HOME}"/prg
 export THEMELOC="${HOME}"/src/suckless/themes
 export CFLAGS='-O2 -pipe -s -pedantic -std=c99 -fstack-protector-strong -fexceptions'
 export LDFLAGS=-s
@@ -76,13 +76,13 @@ build() {
         cd "$name"
         make -s clean
 	case $name in
-		aslstatus) make -s PREFIX="$PREFIX" AUDIO="ALSA" ;;
+		aslstatus) make -s PREFIX="$PREFIX"/"$name"/.local AUDIO="ALSA" ;;
 		*) make -s -j"${NPROC:-1}" CC="${CC:-gcc}" THEMELOC="${THEMELOC}"
 	esac
 	case $name in
-		slock) sudo make -s PREFIX="$PREFIX" install ;;
-		aslstatus) make -s PREFIX="$PREFIX" AUDIO="ALSA" install ;;
-		*) make -s PREFIX="$PREFIX" install
+		slock) sudo make -s PREFIX="$PREFIX"/"$name"/.local install ;;
+		aslstatus) make -s PREFIX="$PREFIX"/"$name"/.local AUDIO="ALSA" install ;;
+		*) make -s PREFIX="$PREFIX"/"$name"/.local install
 	esac
     done
 }
