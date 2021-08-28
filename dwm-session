@@ -6,58 +6,15 @@
 #
 export DISPLAY=${DISPLAY:-:0}
 
-command -v dimensions >/dev/null &&
-export DIMENSIONS="$(dimensions)"
-
 xhost +local: >/dev/null &
 
 # some x options
 xset b off &
-xset +fp ~/.fonts &
-xset +fp ~/.local/share/fonts &
 
-run() {
-    cmd=$1
-    shift
-    if ! pgrep $cmd >/dev/null ; then
-        $cmd "$@" &
-    fi
-}
 
-# gnome keyring
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
+# Clean up after GDM
+xprop -root -remove _NET_NUMBER_OF_DESKTOPS \
+      -remove _NET_DESKTOP_NAMES \
+      -remove _NET_CURRENT_DESKTOP 2> /dev/null
 
-# autostart programs
-#if command -v dex &> /dev/null; then
-#    dex /etc/xdg/autostart/at-spi-dbus-bus.desktop
-#    dex /etc/xdg/autostart/pop-flatpak-repos.desktop
-#    dex /etc/xdg/autostart/nm-applet.desktop
-#    dex /etc/xdg/autostart/pulseaudio.desktop
-#    dex /etc/xdg/autostart/user-dirs-update-gtk.desktop
-#    dex /etc/xdg/autostart/xdg-user-dirs.desktop
-#    dex /etc/xdg/autostart/polkit-mate-authentication-agent-1.desktop
-#    dex /etc/xdg/autostart/print-applet.desktop
-#    dex /etc/xdg/autostart/spice-vdagent.desktop
-#    dex /etc/xdg/autostart/blueman.desktop
-#    dex -a -s "$HOME/.config/autostart"
-#fi
-
-#run sxhkd
-#run dunst
-#run background
-#run pavolume --set 50
-#run brightnessControl --set 50
-
-#locker
-#run xss-lock -l -- transfer-sleep-lock-generic-delay
-
-#compositor
-#picom --experimental-backends -b
-
-# remove run function
-unset -f run
-
-# go go go!
-#eval exec $HOME/.local/bin/dwm
 exec $HOME/.local/bin/dwm
