@@ -159,21 +159,19 @@ static const int nmaster      = 1;
 
 /* -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
 static const char *const autostart[] = {
+	"/usr/lib/aarch64-linux-gnu/xfce4/notifyd/xfce4-notifyd", NULL,
+	"/usr/bin/xfsettingsd", NULL,
+	"/usr/bin/gnome-keyring-daemon", "--start", "--components=ssh,secrets,pkcs11", NULL,
+	"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1", NULL,
+	"/usr/bin/xdg-user-dirs-gtk-update", NULL,
+	"/usr/bin/xdg-user-dirs-update", NULL,
+	"/usr/bin/snap", "userd", "--autostart", NULL,
+	"/usr/bin/xiccd", NULL,
+	"/usr/bin/nitrogen", "--restore", NULL,
+	"/usr/bin/sxhkd", NULL,
+	"/home/rob/.local/bin/aslstatus", NULL,
 	"/home/rob/.config/dwm/autostart", NULL,
-	"sxhkd", NULL,
-	"aslstatus", NULL,
-	"dex", "/etc/xdg/autostart/xfce4-notifyd.desktop", NULL,
-	"dex", "/etc/xdg/autostart/xfsettingsd.desktop", NULL,
-	"dex", "/etc/xdg/autostart/gnome-keyring-ssh.desktop", NULL,
-	"dex", "/etc/xdg/autostart/gnome-keyring-secrets.desktop", NULL,
-	"dex", "/etc/xdg/autostart/gnome-keyring-pkcs11.desktop", NULL,
-	"dex", "/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop", NULL,
-	"dex", "/etc/xdg/autostart/user-dirs-update-gtk.desktop", NULL,
-	"dex", "/etc/xdg/autostart/xdg-user-dirs.desktop", NULL,
-	"dex", "/etc/xdg/autostart/snap-userd-autostart.desktop", NULL,
-	"dex", "/etc/xdg/autostart/xiccd.desktop", NULL,
-	"nitrogen", "--restore", NULL,
-//        "nm-applet", "--indicator", NULL,
+//	"nm-applet", "--indicator", NULL,
 	NULL /* terminate */
 };
 
